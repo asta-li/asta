@@ -47,7 +47,7 @@ const Post = ({ data: { post } }: PostProps) => (
     <Heading as="h1" variant="styles.h1">
       {post.title}
     </Heading>
-    <p sx={{ color: `secondary`, mt: 3, a: { color: `secondary` }, fontSize: [1, 1, 2] }}>
+    <p sx={{ color: `secondary`, mt: 3, mb: 3, a: { color: `secondary` }, fontSize: [1, 1, 2] }}>
       <time>{post.date}</time>
       {post.tags && (
         <React.Fragment>
@@ -55,8 +55,9 @@ const Post = ({ data: { post } }: PostProps) => (
           <ItemTags tags={post.tags} />
         </React.Fragment>
       )}
-      {post.timeToRead && ` — `}
-      {post.timeToRead && <span>{post.timeToRead} min read</span>}
+    </p>
+    <p sx={{ color: `secondary`, mt: 2, a: { color: `secondary` }, fontSize: [1, 1, 2] }}>
+      {post.description ? post.description : post.excerpt}
     </p>
     <section
       sx={{

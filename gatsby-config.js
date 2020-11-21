@@ -14,10 +14,56 @@ module.exports = {
     siteUrl: `https://asta.li`,
     siteDescription: `Asta Li's personal website.`,
     siteLanguage: `en`,
-    siteImage: `site-image.png`,
+    siteImage: `/site-image.png`,
     author: `Asta Li`,
   },
   plugins: [
+    {
+      resolve: `gatsby-plugin-mdx`,
+      options: {
+        extensions: [`.mdx`, `.md`],
+        gatsbyRemarkPlugins: [
+          {
+            resolve: '@bonobolabs/gatsby-remark-images-custom-widths',
+            options: {
+              maxWidth: 750,
+              quality: 100,
+              linkImagesToOriginal: false,
+              backgroundColor: `transparent`,
+            }
+          },
+          {
+            resolve: `gatsby-remark-images`,
+            options: {
+              maxWidth: 750,
+              quality: 100,
+              linkImagesToOriginal: false,
+              backgroundColor: `transparent`,
+            },
+          },
+          {
+            resolve: `gatsby-remark-katex`,
+            options: {
+              // Add any KaTeX options from https://github.com/KaTeX/KaTeX/blob/master/docs/options.md here
+              strict: `ignore`,
+            },
+          },
+          `gatsby-remark-smartypants`,
+        ],
+        plugins: [
+          '@bonobolabs/gatsby-remark-images-custom-widths',
+          {
+            resolve: `gatsby-remark-images`,
+            options: {
+              maxWidth: 750,
+              quality: 100,
+              linkImagesToOriginal: false,
+              backgroundColor: `transparent`,
+            },
+          },
+        ],
+      },
+    },
     {
       resolve: `gatsby-plugin-google-analytics`,
       options: {
@@ -27,10 +73,13 @@ module.exports = {
     {
       resolve: `@lekoarts/gatsby-theme-minimal-blog-core`,
       options: {
+        mdx: false,
+        blogPath: "/articles",
+        formatString: "MMMM DD, YYYY",
         navigation: [
           {
             title: `Articles`,
-            slug: `/blog`,
+            slug: `/articles`,
           },
           {
             title: `About`,
@@ -41,6 +90,10 @@ module.exports = {
           {
             name: `Github`,
             url: `https://github.com/asta-li`,
+          },
+          {
+            name: `LinkedIn`,
+            url: `https://www.linkedin.com/in/yanastali`,
           },
         ],
       },
