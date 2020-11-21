@@ -1,4 +1,4 @@
-# Hi
+# Hi, I'm Asta.
 
 This is my personal website.
 
@@ -7,29 +7,24 @@ This is my personal website.
 1. **Clone the repo.**
 
 ```sh
-git clone https://github.com/asta-li/asta-li.git
+git clone https://github.com/asta-li/asta.git
 ```
 
 2. **Develop locally.**
 
 Start the website locally.
 ```sh
-cd asta-li
+cd asta
 gatsby develop
 ```
 View the website at `http://localhost:8000`.
 
 3. **Deploy.**
 
-Create production build.
+Create production build and deploy to Github Pages.
+This pushes the built code to the `deploy` branch.
 ```sh
-gatsby build
-gatsby serve
-```
-
-Deploy to Google App Engine.
-```sh
-gcloud app deploy
+npm run deploy
 ```
 
 ## Thanks
