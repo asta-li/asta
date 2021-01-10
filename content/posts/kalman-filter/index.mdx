@@ -1,9 +1,21 @@
 ---
-title: "Kalman Filter"
+title: "Asymmetric Uncertainty in a Kalman Filter"
 date: 2020-06-12
 slug: "/kalman-filter"
 description: "Why estimating off-diagonal elements of the covariance matrix is important."
 ---
+
+A while ago I was thinking about state parameterization for objects that are symmetric about their
+centers, but are more or less only observed from one edge at a time. It was unintuitive to me how
+the kalman filter preserves asymmetric uncertainty given symmetric state and asymmetric observations, 
+so I came up with this toy example to work out the details.
+
+If you're unfamiliar with the Kalman filter, this is my favorite introduction:
+https://www.bzarg.com/p/how-a-kalman-filter-works-in-pictures/.   
+
+#   
+
+#### Problem set-up
 
 Consider a stick world where the "true" track state is parameterized with center _c_ and length _L_, but we observe tracks parameterized with the front point _f_ and the rear point _r_.
 
@@ -103,12 +115,15 @@ array([[ 5e-04, 0    ],
        [ 0,     2e-03]])
 ```
 
+#
 #### We show that the projected front is still highly confident
 
 After we update with a very confident front, the center and length estimate is still very uncertain. However, when we project the updated track state back into the observation space, the projected front point is highly confident.
 
 The non-diagonal terms in the track state covariance reflect the strong (in this case, inverse) relationship between _c_ and _L_ given that we're confident about _f_.
 Physically, the anti-correlation between the center and length means that to bring the center forward the length has to shrink and to move the center backward the length has to increase - both of which are consistent with having high certainty for the front observation.
+
+#
 
 **Consider the symmetric counterexample argument**: "We can't be very confident about _f_ because we are not confident about _r_, and the projection from the state space to the observation space for the front and rear points is symmetric."
 

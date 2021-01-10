@@ -26,7 +26,3 @@ This pushes the built code to the `deploy` branch.
 ```sh
 npm run deploy
 ```
-
-## Thanks
-
-- Gatsby starter: https://github.com/LekoArts/gatsby-starter-minimal-blog

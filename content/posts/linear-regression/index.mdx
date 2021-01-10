@@ -1,9 +1,110 @@
 ---
-title: "Linear Regression"
+title: "Linear Regression with All the Steps"
 date: 2019-10-25
 slug: "/linear-regression"
-description: This is linear regression with all the steps.
+description: Common misconceptions, implicit assumptions, and missed steps in linear regression.
 ---
 
-TODO: This is linear regression with all the steps.
+Linear regression is kind of a beautiful problem. I wanted to point out a few details that a lot of people miss and provide the derivation of the closed-form solution without skipping any steps.
+
+#
+
+#### Problem Set-up
+
+We're given a dataset of N points $(x_i, y_i)$, where $x_i$ is a D-dimensional feature vectory and $y_i$ is a 1D scalar.
+In this case, $y(x)$ is a random variable. We want to build a model such that, given some new inputs $x$, we can predict the mean output $\hat{y}(x)$.
+
+<img src="./line.png" alt="Points" width="400px"/>
+
+Our model hypothesis is that $y$ is linear in $w$, not necessarily $x$, which is a common misconception:
+$$
+\hat{y}(x) = \sum_j^D w_j f_j(x) + w_0
+$$
+where $w_j$ are elements of the weight vector $w$ and $f_j(x)$ is a (potentially non-linear) function applied to x.
+For the rest of this problem, we'll assume $f(x) = x$ for simplicity. For the convenience of matrix operations, we'll roll the bias term inside $w$ by prepending a dimension to $x$ and defining:
+$$
+f_0(x) \equiv 1; x_0 = 1 \\
+D = D + 1 \\
+$$.
+
+Note that we are making a number of assumptions about the data and errors here - see this great
+[Stats StackExchange](https://stats.stackexchange.com/questions/16381/what-is-a-complete-list-of-the-usual-assumptions-for-linear-regression)
+answer for more details.
+
+#### Loss Function
+
+We want to choose model parameters $w$ to fit the data well. To do this, we can minimize an error
+function that is larger if the model fits the data more poorly. We use the sum of squared errors
+as our loss function for a few reasons:
+
+- The resulting function is smooth and differentiable, which is easier to optimize
+- The errors from overshooting some amount are the same as undershooting by that amount
+- The least squares solution gives us the maximum likelihood estimator (MLE) if the noise is an independent Gaussian ($y_i = wx_i + \epsilon_i, \epsilon \sim N(0, \sigma^2)$)
+
+#
+#### Matrix Form
+
+Before we dive into the solution, we'll rewrite the problem formulation and loss function in matrix form,
+where $\hat{Y}$ is an Nx1 vector, $X$ is a NxD matrix, and $w$ is a Dx1 vector.
+$$
+\hat{Y} = Xw
+$$
+$$
+L = (\hat{Y} - Y)^T (\hat{Y} - Y) \\ 
+= (Xw - Y)^T (Xw - Y) 
+$$
+
+#### Closed Form Solution
+
+Now we can solve for the $w$ that minimizes our loss function by taking the first derivative of the
+loss function $L$ with respect to $w$ and setting it equal to zero.
+This leads to our global minimum because the least-squares loss is convex.
+$$
+\frac{\partial L}{\partial w} (Xw - Y)^T (Xw - Y) = 0
+$$
+Before taking the derivative, we can expand out the product.
+$$
+\frac{\partial L}{\partial w} (w^TX^TXw - w^TX^Ty - y^TXw + y^Ty) = 0
+$$
+
+Recall our matrix derivative properies ([proofs](https://dawenl.github.io/files/mat_deriv.pdf)):
+$$
+\frac{\partial}{\partial x} (x^T A x) = (A + A^T)x = 2Ax \;(1) \\
+\frac{\partial}{\partial x} (x^T A) = A \;(2) \\
+\frac{\partial}{\partial x} (A x) = A^T \;(3) \\
+$$
+Note that $(A + A^T)x = 2Ax$ if $A$ is symmetric.
+
+#
+
+Take the derivative.
+For the first term, use property 1 where $A=X^TX$ is symmetric ([proof](https://math.stackexchange.com/questions/2685437/why-is-xt-x-a-symmetric-matrix)).
+For the second term, use property 2 where $A=X^Ty$.
+For the third term, use property 3 where $A=y^TX$.
+$$
+2X^TXw - X^Ty - (y^TX)^T = 0 \\
+$$
+$$
+2X^TXw - 2X^Ty = 0 \\
+$$
+$$
+w = (X^TX)^{-1}X^Ty
+$$
+
+The solution $w = (X^TX)^{-1}X^Ty$ is also known as the normal equation.
+
+
+#### Discussion
+
+Note that $X^TX$ may not be invertible if:
+- There are too few examples for the number of features: N < D
+- It is singular (by definition), i.e. the determinant is zero
+- The columns are linearly dependent; there are redundant features
+
+Here I focus on the closed-form Ordinary Least Squares solution, but it's also important to understand the MLE, SVD, and gradient descent approaches. [MLWiki](http://mlwiki.org/index.php/Normal_Equation) has a great compact summary. 
+
+### Further Reading
+
+I really like the book [Numerical Optimization](http://egrcc.github.io/docs/math/numerical-optimization.pdf) by Jorge Nocedal and Stephen Wright. I recommend reading at least Section 2:  Fundamentals of Unconstrained Optimization.
+
 

@@ -8,7 +8,7 @@ const newsletterFeed = require(`./src/utils/newsletterFeed`)
 
 module.exports = {
   siteMetadata: {
-    siteTitle: `Asta`,
+    siteTitle: `Asta Li`,
     siteTitleAlt: `Asta`,
     siteHeadline: `Asta`,
     siteUrl: `https://asta.li`,
