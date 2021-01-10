@@ -4,7 +4,7 @@
 <url> <loc>https://asta.li/articles</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
 <url> <loc>https://asta.li/tags</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
 <url> <loc>https://asta.li/kalman-filter</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
-<url> <loc>https://asta.li/maximum-likelihood-estimation</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
 <url> <loc>https://asta.li/linear-regression</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
+<url> <loc>https://asta.li/fixing-wrist-pain</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
 <url> <loc>https://asta.li/about</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
 </urlset>
